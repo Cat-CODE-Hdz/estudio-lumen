@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /estudio-lumen/
+
+Sitemap: https://cat-code-hdz.github.io/estudio-lumen/sitemap.xml

@@ -1,4 +1,4 @@
-name: Deploy CatCode to GitHub Pages
+name: Deploy Estudio Lumen to GitHub Pages
 
 on:
   push:
