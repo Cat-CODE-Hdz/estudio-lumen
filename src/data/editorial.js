@@ -1,0 +1,252 @@
+// Capa WEEKLY — calendario editorial de demostración.
+// 5 semanas × 5 piezas, con fecha, red, formato y copy escrito.
+// Contenido conceptual para demostración: no describe clientes reales,
+// no incluye reseñas, estrellas ni cifras de negocio.
+
+export const WEEKS = [
+  {
+    id: 'S1',
+    title: 'Lanzamiento',
+    desc: 'El estudio y su forma de trabajar.',
+    pieces: [
+      {
+        id: 'S1-1',
+        date: 'Lun 26 oct 2026',
+        network: 'Instagram',
+        format: 'Reel corto',
+        label: 'NUEVO',
+        copy: 'Abrimos las puertas de Lumen. Un estudio de belleza contemporáneo en Valencia: facial, pelo, manicura y mirada, con citas sin prisas. Esto es solo el principio.',
+      },
+      {
+        id: 'S1-2',
+        date: 'Mar 27 oct 2026',
+        network: 'Stories',
+        format: 'Daily de proceso',
+        label: 'ESTUDIO',
+        copy: 'Día a día en el estudio: preparando el espacio antes de abrir. Cada cita empieza mucho antes de que entres por la puerta.',
+      },
+      {
+        id: 'S1-3',
+        date: 'Mié 28 oct 2026',
+        network: 'Instagram',
+        format: 'Carrusel',
+        label: 'NUEVO',
+        copy: 'Cuatro formas de cuidarte en Lumen: 1) Cuidado facial 2) Pelo 3) Manicura 4) Cejas y mirada. Desliza para ver cada servicio por dentro.',
+      },
+      {
+        id: 'S1-4',
+        date: 'Jue 29 oct 2026',
+        network: 'Stories',
+        format: 'Recordatorio',
+        label: 'ESTUDIO',
+        copy: 'Si quieres cita en Lumen, escríbenos por WhatsApp. Te respondemos personalmente y buscamos hueco contigo.',
+      },
+      {
+        id: 'S1-5',
+        date: 'Vie 30 oct 2026',
+        network: 'Post fijo',
+        format: 'Imagen con texto',
+        label: 'NUEVO',
+        copy: '«Belleza que se siente.» El lema que va a guiar todo lo que hagamos en Lumen. Fijado aquí para que no se pierda.',
+      },
+    ],
+  },
+  {
+    id: 'S2',
+    title: 'Servicios',
+    desc: 'Un tratamiento por pieza, con su duración y su precio.',
+    pieces: [
+      {
+        id: 'S2-1',
+        date: 'Lun 2 nov 2026',
+        network: 'Instagram',
+        format: 'Reel corto',
+        label: 'SKIN',
+        copy: 'Limpieza facial profunda · 60 min · 45 € (precio conceptual de demo). Limpieza, hidratación y un plan para tu piel. Reserva por WhatsApp.',
+      },
+      {
+        id: 'S2-2',
+        date: 'Mar 3 nov 2026',
+        network: 'Stories',
+        format: 'Daily de proceso',
+        label: 'PELO',
+        copy: 'Corte y styling en el puesto de pelo: lavado, corte y acabado. 45 minutos en la agenda conceptual de esta demo.',
+      },
+      {
+        id: 'S2-3',
+        date: 'Mié 4 nov 2026',
+        network: 'Instagram',
+        format: 'Carrusel',
+        label: 'NAILS',
+        copy: 'Manicura y semipermanente · 45 min · 30 € (precio conceptual de demo). Cuidado de cutículas, esmalte y, si quieres, nail art. Cuatro ideas en este carrusel.',
+      },
+      {
+        id: 'S2-4',
+        date: 'Jue 5 nov 2026',
+        network: 'Stories',
+        format: 'Recordatorio',
+        label: 'MIRADA',
+        copy: 'Diseño de cejas y laminado · 40 min · 25 € (precio conceptual de demo). Si te lo preguntas: también hacemos lifting y tinte.',
+      },
+      {
+        id: 'S2-5',
+        date: 'Vie 6 nov 2026',
+        network: 'Post fijo',
+        format: 'Imagen con texto',
+        label: 'ESTUDIO',
+        copy: 'Nuestra lista de servicios, de un vistazo: facial · pelo · manicura · cejas y mirada. Todo con cita previa por WhatsApp.',
+      },
+    ],
+  },
+  {
+    id: 'S3',
+    title: 'El proceso',
+    desc: 'Qué pasa cuando entras, en qué orden.',
+    pieces: [
+      {
+        id: 'S3-1',
+        date: 'Lun 9 nov 2026',
+        network: 'Instagram',
+        format: 'Reel corto',
+        label: 'ESTUDIO',
+        copy: 'Qué pasa cuando entras a Lumen: 1) Te escuchamos 2) Elegimos el tratamiento 3) Lo ejecutamos con calma 4) Te damos pautas para casa.',
+      },
+      {
+        id: 'S3-2',
+        date: 'Mar 10 nov 2026',
+        network: 'Stories',
+        format: 'Daily de proceso',
+        label: 'SKIN',
+        copy: 'Preparando el box de facial: toallas, productos y luz a punto. El orden importa.',
+      },
+      {
+        id: 'S3-3',
+        date: 'Mié 11 nov 2026',
+        network: 'Instagram',
+        format: 'Carrusel',
+        label: 'ESTUDIO',
+        copy: 'Antes, durante y después de tu cita: qué llevarte en cada momento. Cuatro tarjetas, cero sorpresas.',
+      },
+      {
+        id: 'S3-4',
+        date: 'Jue 12 nov 2026',
+        network: 'Stories',
+        format: 'Recordatorio',
+        label: 'ESTUDIO',
+        copy: '¿Es tu primera vez en Lumen? Llega cinco minutos antes. Nos da tiempo a conocernos antes de empezar.',
+      },
+      {
+        id: 'S3-5',
+        date: 'Vie 13 nov 2026',
+        network: 'Post fijo',
+        format: 'Imagen con texto',
+        label: 'NUEVO',
+        copy: '«No es solo un tratamiento.» Escuchar, crear, cuidar: así trabajamos.',
+      },
+    ],
+  },
+  {
+    id: 'S4',
+    title: 'Confianza',
+    desc: 'Garantía, condiciones y claridad, sin prueba social inventada.',
+    pieces: [
+      {
+        id: 'S4-1',
+        date: 'Lun 16 nov 2026',
+        network: 'Instagram',
+        format: 'Reel corto',
+        label: 'SKIN',
+        copy: 'Si un resultado no te convence, se habla en el propio estudio y lo revisamos contigo. Así de simple.',
+      },
+      {
+        id: 'S4-2',
+        date: 'Mar 17 nov 2026',
+        network: 'Stories',
+        format: 'Daily de proceso',
+        label: 'ESTUDIO',
+        copy: 'Elegimos productos profesionales para cada servicio y para cada piel. Lo que usamos se te explica antes de usarlo.',
+      },
+      {
+        id: 'S4-3',
+        date: 'Mié 18 nov 2026',
+        network: 'Instagram',
+        format: 'Carrusel',
+        label: 'NUEVO',
+        copy: 'Condiciones claras antes de empezar: qué incluye cada servicio, cuánto dura y cómo se reserva. Sin letra pequeña.',
+      },
+      {
+        id: 'S4-4',
+        date: 'Jue 19 nov 2026',
+        network: 'Stories',
+        format: 'Recordatorio',
+        label: 'ESTUDIO',
+        copy: '¿Dudas con un tratamiento? Escríbenos por WhatsApp antes de reservar. Preferimos aclararlo antes.',
+      },
+      {
+        id: 'S4-5',
+        date: 'Vie 20 nov 2026',
+        network: 'Post fijo',
+        format: 'Imagen con texto',
+        label: 'NUEVO',
+        copy: 'Confianza sin promesas vacías: proceso explicado, garantía escrita y trato directo.',
+      },
+    ],
+  },
+  {
+    id: 'S5',
+    title: 'Objeción',
+    desc: 'Las dudas que salen antes de la primera cita.',
+    pieces: [
+      {
+        id: 'S5-1',
+        date: 'Lun 23 nov 2026',
+        network: 'Instagram',
+        format: 'Reel corto',
+        label: 'ESTUDIO',
+        copy: '«¿Tendré que reservar con mucha antelación?» Recomendamos reservar previamente para garantizar disponibilidad.',
+      },
+      {
+        id: 'S5-2',
+        date: 'Mar 24 nov 2026',
+        network: 'Stories',
+        format: 'Daily de proceso',
+        label: 'SKIN',
+        copy: 'Pregunta frecuente: «¿Puedo combinar varios servicios?» Sí. Te ayudamos a crear una combinación adaptada a ti.',
+      },
+      {
+        id: 'S5-3',
+        date: 'Mié 25 nov 2026',
+        network: 'Instagram',
+        format: 'Carrusel',
+        label: 'NUEVO',
+        copy: 'Cinco dudas típicas antes de la primera cita en Lumen, resueltas en cinco tarjetas.',
+      },
+      {
+        id: 'S5-4',
+        date: 'Jue 26 nov 2026',
+        network: 'Stories',
+        format: 'Recordatorio',
+        label: 'ESTUDIO',
+        copy: '«¿Dónde está Lumen?» Valencia. Dirección conceptual para esta demo; no es un local real.',
+      },
+      {
+        id: 'S5-5',
+        date: 'Vie 27 nov 2026',
+        network: 'Post fijo',
+        format: 'Imagen con texto',
+        label: 'NUEVO',
+        copy: '«¿Nos vemos en Lumen?» Cuéntanos qué necesitas y te ayudamos a encontrar tu tratamiento.',
+      },
+    ],
+  },
+]
+
+export const ALL_PIECES = WEEKS.flatMap((week) =>
+  week.pieces.map((piece) => ({ ...piece, weekId: week.id, weekTitle: week.title })),
+)
+
+// La rejilla SOCIAL sale del calendario: las piezas de Instagram más
+// dos post fijos, hasta completar 12. No es un bloque de contenido aparte.
+export const INSTAGRAM_POSTS = ALL_PIECES.filter(
+  (piece) => piece.network === 'Instagram' || piece.network === 'Post fijo',
+).slice(0, 12)
