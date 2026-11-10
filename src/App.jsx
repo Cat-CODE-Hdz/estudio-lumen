@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { openWhatsAppOrDemo } from './lib/whatsapp'
+import { openWhatsAppOrDemo, DEMO_MODE } from './lib/whatsapp'
 import { WEEKS, INSTAGRAM_POSTS } from './data/editorial'
 
 const WHATSAPP_MSG = 'Hola, me gustaría reservar una cita en Estudio Lumen.'
@@ -7,8 +7,17 @@ const WHATSAPP_MSG = 'Hola, me gustaría reservar una cita en Estudio Lumen.'
 const DEMO_TOAST_IG =
   'Esta es una demo de portafolio. El perfil @estudiolumen no existe: la rejilla es contenido estático, sin API de Instagram.'
 
-const HERO_IMG =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuADVTNi844US5afwgqxdbGsgro9wRr14K0pCqNC69BVx1WQwB0UHzOh8Ojoxj5M3rBP10JW1Dgq7yz4ZDgypR3bN8DPhz9IRJ3KbG2VufTIZ1n2GS5eYgaaVdRG2qRoztv7tqLA8pze1gKJoSw5R9XIWGBmzmlkMQPawpsK4R2RZdUQOHMTJ5ax2pwFI938hAYR28XdHq_Cd-Q7CPbVn_fumETfvl7tCnIw45zPhvyIyj-KoA0NDdQ1'
+const asset = (path) => `${import.meta.env.BASE_URL}${path}`
+
+const HERO_IMG = asset('images/hero/lumen-hero-desktop.webp')
+const HERO_IMG_MOBILE = asset('images/hero/lumen-hero-mobile.webp')
+const STUDIO_IMG = asset('images/studio/interior.webp')
+const RECEPTION_IMG = asset('images/studio/reception.webp')
+const SPECIALIST_IMG = asset('images/team/specialist.webp')
+const FEATURED_IMG = asset('images/results/result-skin.webp')
+const IG_IMAGES = Array.from({ length: 6 }, (_, i) =>
+  asset(`images/instagram/post-0${i + 1}.webp`),
+)
 
 const NAV_LINKS = [
   { label: 'Inicio', href: '#inicio' },
@@ -24,24 +33,28 @@ const SERVICES = [
     id: 'facial',
     num: '01',
     name: 'Cuidado facial',
+    img: asset('images/services/facial.webp'),
     items: ['Limpieza', 'Hidratación', 'Tratamientos personalizados'],
   },
   {
     id: 'pelo',
     num: '02',
     name: 'Pelo',
+    img: asset('images/services/hair.webp'),
     items: ['Corte', 'Color', 'Tratamientos', 'Styling'],
   },
   {
     id: 'manicura',
     num: '03',
     name: 'Manicura',
+    img: asset('images/services/nails.webp'),
     items: ['Manicura', 'Semipermanente', 'Nail art', 'Cuidado'],
   },
   {
     id: 'mirada',
     num: '04',
     name: 'Cejas & Mirada',
+    img: asset('images/services/brows.webp'),
     items: ['Diseño', 'Laminado', 'Lifting', 'Tinte'],
   },
 ]
@@ -65,36 +78,42 @@ const GALLERY_ITEMS = [
     id: 'g1',
     category: 'PELO',
     title: 'Corte y styling',
+    img: asset('images/results/result-hair.webp'),
     desc: 'Trabajo de ejemplo: corte con acabado natural. Imagen conceptual para la demo.',
   },
   {
     id: 'g2',
     category: 'UÑAS',
     title: 'Semipermanente',
+    img: asset('images/results/result-nails.webp'),
     desc: 'Trabajo de ejemplo: manicura semipermanente de tono liso. Imagen conceptual para la demo.',
   },
   {
     id: 'g3',
     category: 'PIEL',
     title: 'Limpieza facial',
+    img: asset('images/results/result-skin.webp'),
     desc: 'Trabajo de ejemplo: tratamiento de limpieza e hidratación. Imagen conceptual para la demo.',
   },
   {
     id: 'g4',
     category: 'MIRADA',
     title: 'Diseño de cejas',
+    img: asset('images/results/result-brows.webp'),
     desc: 'Trabajo de ejemplo: diseño y laminado de cejas. Imagen conceptual para la demo.',
   },
   {
     id: 'g5',
     category: 'PELO',
     title: 'Color y brillo',
+    img: asset('images/results/result-styling.webp'),
     desc: 'Trabajo de ejemplo: coloración con acabado brillante. Imagen conceptual para la demo.',
   },
   {
     id: 'g6',
     category: 'UÑAS',
-    title: 'Nail art minimal',
+    title: 'Diseño de uñas minimal',
+    img: asset('images/instagram/post-02.webp'),
     desc: 'Trabajo de ejemplo: nail art de línea fina. Imagen conceptual para la demo.',
   },
 ]
@@ -168,7 +187,16 @@ function useDemoToast(message) {
   return { show, Toast }
 }
 
-function ImagePlaceholder({ label, sub, className = '' }) {
+function ImagePlaceholder({ label, sub, className = '', src }) {
+  if (src) {
+    return (
+      <div className={`ph ph--photo ${className}`}>
+        <img className="ph__img" src={src} alt={label} loading="lazy" />
+        {sub ? <span className="ph__badge">{sub}</span> : null}
+      </div>
+    )
+  }
+
   return (
     <div className={`ph ${className}`} role="img" aria-label={`${label}. Imagen conceptual para esta demo.`}>
       <span className="ph__label">{label}</span>
@@ -272,7 +300,7 @@ function Hero({ onWhatsApp }) {
       <div className="hero__grid container">
         <div className="hero__content">
           <div className="hero__badges">
-            <span className="chip">Proyecto conceptual</span>
+            {DEMO_MODE && <span className="chip">Proyecto conceptual</span>}
             <span className="chip chip--ghost">Demo · no es un estudio real</span>
           </div>
           <p className="hero__micro">Valencia · Estudio de belleza contemporáneo</p>
@@ -289,11 +317,14 @@ function Hero({ onWhatsApp }) {
           </div>
         </div>
         <div className="hero__media">
-          <img
-            src={HERO_IMG}
-            alt="Modelo en un estudio de belleza contemporáneo — imagen conceptual de Estudio Lumen"
-            className="hero__image"
-          />
+          <picture>
+            <source media="(max-width: 700px)" srcSet={HERO_IMG_MOBILE} />
+            <img
+              src={HERO_IMG}
+              alt="Estudio de belleza contemporáneo — imagen conceptual de Estudio Lumen"
+              className="hero__image"
+            />
+          </picture>
         </div>
       </div>
     </section>
@@ -325,7 +356,20 @@ function IntroAbout() {
         </div>
 
         <div className="about">
-          <ImagePlaceholder label="Interior del estudio" sub="Espacio Lumen" className="about__media" />
+          <div className="about__photos">
+            <ImagePlaceholder
+              label="Interior del estudio Lumen"
+              sub="Espacio Lumen"
+              className="about__media"
+              src={STUDIO_IMG}
+            />
+            <ImagePlaceholder
+              label="Especialista de Estudio Lumen"
+              sub="Equipo"
+              className="about__portrait"
+              src={SPECIALIST_IMG}
+            />
+          </div>
           <div className="about__text">
             <h3 className="about__title">Un espacio para volver a ti.</h3>
             <p className="section__desc">
@@ -351,6 +395,7 @@ function Services() {
         <div className="services__grid">
           {SERVICES.map((service) => (
             <article key={service.id} className="service">
+              <img className="service__img" src={service.img} alt="" loading="lazy" />
               <span className="service__num">{service.num}</span>
               <h3 className="service__name">{service.name}</h3>
               <ul className="service__list">
@@ -390,13 +435,21 @@ function Experience() {
           <strong>Garantía del proceso:</strong> si algo no va como hablamos, se revisa
           contigo en el propio estudio. Confianza por escrito, no estrellas inventadas.
         </p>
-        <div className="testimonial-slot">
-          <span className="testimonial-slot__tag">Hueco reservado</span>
-          <p className="testimonial-slot__text">
-            Testimonio verificado — con permiso del cliente. Esta demo no publica
-            opiniones, nombres ni valoraciones inventados.
+        <figure className="testimonial-slot">
+          <div className="testimonial-slot__stars" aria-label="5 de 5 estrellas">
+            ★★★★★
+          </div>
+          <blockquote className="testimonial-slot__quote">
+            “Salí del estudio con el pelo exactamente como lo había imaginado. Me explicaron
+            cada paso y el resultado aguantó semanas.”
+          </blockquote>
+          <figcaption className="testimonial-slot__author">
+            <strong>Lucía M.</strong> · Cliente de demo
+          </figcaption>
+          <p className="testimonial-slot__credit">
+            Personaje de una demo de portafolio de CAT CODE
           </p>
-        </div>
+        </figure>
       </div>
     </section>
   )
@@ -433,7 +486,12 @@ function Location({ onWhatsApp }) {
               <span>Escribir por WhatsApp</span>
             </button>
           </div>
-          <ImagePlaceholder label="Mapa de Valencia" sub="Mapa conceptual" className="location__map" />
+          <ImagePlaceholder
+            label="Recepción del Estudio Lumen"
+            sub="Espacio conceptual · no es un local real"
+            className="location__map"
+            src={RECEPTION_IMG}
+          />
         </div>
       </div>
     </section>
@@ -462,9 +520,10 @@ function Featured({ onWhatsApp }) {
           </div>
         </div>
         <ImagePlaceholder
-          label="Tratamiento facial"
+          label="Tratamiento facial en Estudio Lumen"
           sub="Sección editorial"
           className="featured__media"
+          src={FEATURED_IMG}
         />
       </div>
     </section>
@@ -518,7 +577,7 @@ function Gallery() {
               className={`gallery__item gallery__item--${item.category.toLowerCase()}`}
               onClick={() => setLightbox(item)}
             >
-              <ImagePlaceholder label={item.title} sub={item.category} />
+              <ImagePlaceholder label={item.title} sub={item.category} src={item.img} />
               <span className="gallery__caption">
                 <span className="gallery__cat">{item.category}</span>
                 <span>{item.title}</span>
@@ -548,12 +607,19 @@ function Gallery() {
             ×
           </button>
           <div className="lightbox__body">
-            <ImagePlaceholder label={lightbox.title} sub={lightbox.category} className="lightbox__media" />
+            <ImagePlaceholder
+              label={lightbox.title}
+              sub={lightbox.category}
+              className="lightbox__media"
+              src={lightbox.img}
+            />
             <div className="lightbox__meta">
               <span className="gallery__cat">{lightbox.category}</span>
               <h3 className="lightbox__title">{lightbox.title}</h3>
               <p>{lightbox.desc}</p>
-              <span className="lightbox__badge">Proyecto conceptual · imagen de demo</span>
+              {DEMO_MODE && (
+                <span className="lightbox__badge">Proyecto conceptual · imagen de demo</span>
+              )}
             </div>
           </div>
         </div>
@@ -593,7 +659,8 @@ function WeeklyCalendar() {
           <p className="section__desc">
             Cinco semanas de contenido recurrente, con fecha, red y formato. Así se ve el
             trabajo sostenido que incluye el paquete FULL: 5 piezas por semana, escritas
-            y fechadas, no un “colocar aquí”.
+            y fechadas, no un “colocar aquí”. Los Reel se presupuestan aparte como add-on
+            (79 €/pieza); el calendario los marca para que no haya sorpresas.
           </p>
         </div>
 
@@ -614,9 +681,14 @@ function WeeklyCalendar() {
                       <span className="weekly__date">{piece.date}</span>
                       <span className="weekly__network">{piece.network}</span>
                       <span className="weekly__format">{piece.format}</span>
+                      {piece.format.includes('Reel') ? (
+                        <span className="weekly__addon">Reel · add-on 79 €/pieza</span>
+                      ) : null}
                     </div>
                     <p className="weekly__copy">{piece.copy}</p>
-                    <span className="weekly__badge">Proyecto conceptual</span>
+                    {DEMO_MODE && (
+                      <span className="weekly__badge">Proyecto conceptual</span>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -645,13 +717,19 @@ function InstagramGrid() {
         </div>
 
         <div className="ig__grid">
-          {INSTAGRAM_POSTS.map((post) => (
+          {INSTAGRAM_POSTS.map((post, index) => (
             <button key={post.id} type="button" className="ig__tile" onClick={show}>
-              <ImagePlaceholder label={`${post.weekId} · ${post.format}`} sub={post.label} />
+              <ImagePlaceholder
+                label={`${post.weekId} · ${post.format}`}
+                sub={post.label}
+                src={IG_IMAGES[index % IG_IMAGES.length]}
+              />
               <span className="ig__caption">
                 <span className="ig__handle">@estudiolumen · {post.date}</span>
                 <span className="ig__copy">{post.copy}</span>
-                <span className="ig__badge">{post.label} · Proyecto conceptual</span>
+                {DEMO_MODE && (
+                  <span className="ig__badge">{post.label} · Proyecto conceptual</span>
+                )}
               </span>
             </button>
           ))}
@@ -671,6 +749,7 @@ function InstagramGrid() {
 function BookingForm() {
   const [status, setStatus] = useState('idle')
   const [popover, setPopover] = useState(false)
+  const [error, setError] = useState('')
   const [form, setForm] = useState({
     nombre: '',
     telefono: '',
@@ -682,10 +761,13 @@ function BookingForm() {
   function handleChange(event) {
     const { name, value } = event.target
     if (name === 'telefono') {
-      const digits = value.replace(/\D/g, '').slice(0, 9)
-      const formatted = digits.replace(/(\d{3})(\d{0,3})(\d{0,3})/, (_, a, b, c) =>
+      const digits = value.replace(/\D/g, '')
+      if (digits.length > 0 && !/^[67]/.test(digits)) return
+      const truncated = digits.slice(0, 9)
+      const formatted = truncated.replace(/(\d{3})(\d{0,3})(\d{0,3})/, (_, a, b, c) =>
         [a, b, c].filter(Boolean).join(' '),
       )
+      setError('')
       setForm({ ...form, telefono: formatted })
       return
     }
@@ -693,10 +775,11 @@ function BookingForm() {
   }
 
   function fillExample() {
+    setError('')
     setForm({
-      nombre: 'Nombre de ejemplo',
-      telefono: '600 000 000',
-      servicio: 'Cuidado facial',
+      nombre: 'Ana García',
+      telefono: '612 345 678',
+      servicio: SERVICES[0].name,
       fecha: '',
       notas: 'Datos de ejemplo para probar el formulario de la demo.',
     })
@@ -704,12 +787,19 @@ function BookingForm() {
 
   function handleSubmit(event) {
     event.preventDefault()
+    const digits = form.telefono.replace(/\D/g, '')
+    if (digits && !/^[67]\d{8}$/.test(digits)) {
+      setError('Introduce un móvil español de 9 dígitos que empiece por 6 o 7.')
+      return
+    }
+    setError('')
     setStatus('loading')
     window.setTimeout(() => setStatus('success'), 900)
   }
 
   function reset() {
     setStatus('idle')
+    setError('')
     setForm({ nombre: '', telefono: '', servicio: '', fecha: '', notas: '' })
   }
 
@@ -785,7 +875,17 @@ function BookingForm() {
                 placeholder="6XX XXX XXX"
                 value={form.telefono}
                 onChange={handleChange}
+                aria-invalid={Boolean(error)}
+                aria-describedby={error ? 'cita-tel-error' : 'cita-tel-hint'}
               />
+              <span className="form__hint" id="cita-tel-hint">
+                Móvil español de 9 dígitos (6 o 7). Opcional.
+              </span>
+              {error ? (
+                <span className="form__error" id="cita-tel-error" role="alert">
+                  {error}
+                </span>
+              ) : null}
             </div>
           </div>
 
@@ -853,17 +953,17 @@ function BookingForm() {
               {status === 'loading'
                 ? 'Enviando…'
                 : status === 'success'
-                  ? 'Solicitud registrada'
+                  ? 'Demo completada'
                   : 'Solicitar cita'}
             </button>
           </div>
 
           {status === 'success' ? (
             <div className="form__success" role="status">
-              <strong>Solicitud registrada en la demo.</strong>
+              <strong>Esto es una demostración.</strong>
               <p>
-                No se ha enviado a ningún sitio ni se ha comprobado disponibilidad. Así
-                se vería la confirmación si el extra estuviera activo.
+                Así se vería la confirmación si el formulario estuviera activo. No hemos
+                recibido nada.
               </p>
               <button className="form__reset" type="button" onClick={reset}>
                 Rellenar otra vez →
@@ -911,12 +1011,13 @@ function Footer({ onWhatsApp }) {
             </div>
             <p className="footer__panel-line">
               <strong>Incluye:</strong> landing CUSTOM Pro completa (8 secciones) ·
-              calendario editorial WEEKLY con 5 piezas por semana · gestión de redes
-              SOCIAL con rejilla de Instagram · hosting · responsive · SEO básico
+              calendario editorial WEEKLY con 5 piezas por semana (Reel aparte) · gestión
+              de redes SOCIAL con informe mensual y puesta a punto del perfil · hosting ·
+              responsive · SEO básico
             </p>
             <p className="footer__panel-line footer__panel-line--muted">
               <strong>No incluye:</strong> formulario de citas (extra, a presupuestar) ·
-              aviso legal (lo aporta el cliente) · blog
+              Reel (add-on 79 €/pieza) · aviso legal (lo aporta el cliente) · blog
             </p>
             <p className="footer__panel-note">
               El único nivel con setup incluido: pagas una vez el mes, sin obras.
@@ -934,7 +1035,9 @@ function Footer({ onWhatsApp }) {
 
         <div className="footer__bottom">
           <p>© 2026 Estudio Lumen</p>
-          <p className="footer__concept">Proyecto conceptual · Diseñado por CAT CODE</p>
+          {DEMO_MODE && (
+            <p className="footer__concept">Proyecto conceptual · Diseñado por CAT CODE</p>
+          )}
         </div>
       </div>
     </footer>
