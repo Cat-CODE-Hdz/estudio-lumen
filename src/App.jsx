@@ -650,6 +650,9 @@ function Faq() {
 }
 
 function WeeklyCalendar() {
+  const [active, setActive] = useState(WEEKS[0].id)
+  const activeWeek = WEEKS.find((w) => w.id === active) || WEEKS[0]
+
   return (
     <section id="weekly" className="section section--sand">
       <div className="container">
@@ -664,36 +667,49 @@ function WeeklyCalendar() {
           </p>
         </div>
 
-        <div className="weekly">
+        <div className="weekly__tabs" role="tablist">
           {WEEKS.map((week) => (
-            <article key={week.id} className="weekly__week">
-              <header className="weekly__head">
-                <span className="weekly__id">{week.id}</span>
-                <div>
-                  <h3 className="weekly__title">{week.title}</h3>
-                  <p className="weekly__desc">{week.desc}</p>
-                </div>
-              </header>
-              <ul className="weekly__list">
-                {week.pieces.map((piece) => (
-                  <li key={piece.id} className="weekly__piece">
-                    <div className="weekly__meta">
-                      <span className="weekly__date">{piece.date}</span>
-                      <span className="weekly__network">{piece.network}</span>
-                      <span className="weekly__format">{piece.format}</span>
-                      {piece.format.includes('Reel') ? (
-                        <span className="weekly__addon">Reel · add-on 79 €/pieza</span>
-                      ) : null}
-                    </div>
-                    <p className="weekly__copy">{piece.copy}</p>
-                    {DEMO_MODE && (
-                      <span className="weekly__badge">Proyecto conceptual</span>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </article>
+            <button
+              key={week.id}
+              type="button"
+              role="tab"
+              aria-selected={active === week.id}
+              className={`weekly__tab${active === week.id ? ' weekly__tab--active' : ''}`}
+              onClick={() => setActive(week.id)}
+            >
+              {week.id} · {week.title}
+            </button>
           ))}
+        </div>
+
+        <div className="weekly">
+          <article className="weekly__week">
+            <header className="weekly__head">
+              <span className="weekly__id">{activeWeek.id}</span>
+              <div>
+                <h3 className="weekly__title">{activeWeek.title}</h3>
+                <p className="weekly__desc">{activeWeek.desc}</p>
+              </div>
+            </header>
+            <ul className="weekly__list">
+              {activeWeek.pieces.map((piece) => (
+                <li key={piece.id} className="weekly__piece">
+                  <div className="weekly__meta">
+                    <span className="weekly__date">{piece.date}</span>
+                    <span className="weekly__network">{piece.network}</span>
+                    <span className="weekly__format">{piece.format}</span>
+                    {piece.format.includes('Reel') ? (
+                      <span className="weekly__addon">Reel · add-on 79 €/pieza</span>
+                    ) : null}
+                  </div>
+                  <p className="weekly__copy">{piece.copy}</p>
+                  {DEMO_MODE && (
+                    <span className="weekly__badge">Proyecto conceptual</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </article>
         </div>
       </div>
     </section>
